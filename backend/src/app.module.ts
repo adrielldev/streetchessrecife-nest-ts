@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common/decorators';
+import { PlayerModule } from './player/player.module';
 
 
 @Module({
-  imports: [],
+  imports: [PlayerModule],
   controllers: [],
   providers: [],
 })
