@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id           Int      @id @default(autoincrement())
+  name         String
+  username     String
+  rating_blitz Int      @default(1500)
+  rating_rapid Int      @default(1500)
+  vitorias     Int
+  empates      Int
+  derrotas     Int
+  created_at   DateTime
+  updated_at   DateTime
+}
