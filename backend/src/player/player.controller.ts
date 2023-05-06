@@ -10,7 +10,10 @@ import {
 import { PlayerService } from './player.service';
 import { HttpStatus } from '@nestjs/common';
 import { ResponseGetPlayerDto } from './dto/responseGetPlayer.dto';
-import { BodyPostPlayerDto, BodyUpdatePlayerDto } from './dto/bodyPostPlayer.dto';
+import {
+  BodyPostPlayerDto,
+  BodyUpdatePlayerDto,
+} from './dto/bodyPostPlayer.dto';
 
 @Controller('player')
 export class PlayerController {
@@ -30,18 +33,21 @@ export class PlayerController {
 
   @Get(':id')
   async getSinglePlayer(
-    @Param('id') param: { id: number },
+    @Param('id') id: string,
   ): Promise<ResponseGetPlayerDto | null> {
-    return await this.playerService.getSinglePlayer(param.id);
+    return await this.playerService.getSinglePlayer(id);
   }
 
   @Put(':id')
-  async updatePlayer(@Param('id') id: string, @Body() data: BodyUpdatePlayerDto):Promise<ResponseGetPlayerDto> {
+  async updatePlayer(
+    @Param('id') id: string,
+    @Body() data: BodyUpdatePlayerDto,
+  ): Promise<ResponseGetPlayerDto> {
     return await this.playerService.updatePlayer(id, data);
   }
 
   @Delete(':id')
-  async deletePlayer(@Param('id') id: string):Promise<HttpStatus> {
+  async deletePlayer(@Param('id') id: string): Promise<HttpStatus> {
     await this.playerService.deletePlayer(id);
     return HttpStatus.NO_CONTENT;
   }

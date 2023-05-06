@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common/decorators';
 import { PrismaClient } from '@prisma/client';
 import { ResponseGetPlayerDto } from './dto/responseGetPlayer.dto';
-import { BodyPostPlayerDto, BodyUpdatePlayerDto } from './dto/bodyPostPlayer.dto';
+import {
+  BodyPostPlayerDto,
+  BodyUpdatePlayerDto,
+} from './dto/bodyPostPlayer.dto';
 
 @Injectable()
 export class PlayerService {
@@ -20,9 +23,10 @@ export class PlayerService {
     });
   }
 
-  async getSinglePlayer(id: number): Promise<ResponseGetPlayerDto | null> {
+  async getSinglePlayer(id: string): Promise<ResponseGetPlayerDto | null> {
+    console.log(id);
     return await this.playerPrisma.findFirst({
-      where: { id },
+      where: { id: Number(id) },
     });
   }
 
@@ -32,7 +36,7 @@ export class PlayerService {
       data: { rating_blitz: data.rating_blitz },
     });
   }
-  async deletePlayer(id: string):Promise<void> {
+  async deletePlayer(id: string): Promise<void> {
     await this.playerPrisma.delete({
       where: { id: Number(id) },
     });

@@ -9,8 +9,8 @@ datasource db {
 
 model Player {
   id           Int      @id @default(autoincrement())
-  name         String
-  username     String
+  name         String 
+  username     String   @unique
   rating_blitz Int      @default(1500)
   rating_rapid Int      @default(1500)
   vitorias     Int      @default(0)
@@ -18,4 +18,13 @@ model Player {
   derrotas     Int      @default(0)
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
+  
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+  date_game DateTime @default(now())
+  ganhador String
+  jogador_brancas String
+  jogador_negras String
 }
