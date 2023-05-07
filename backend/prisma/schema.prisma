@@ -9,22 +9,25 @@ datasource db {
 
 model Player {
   id           Int      @id @default(autoincrement())
-  name         String 
+  name         String
   username     String   @unique
   rating_blitz Int      @default(1500)
   rating_rapid Int      @default(1500)
   vitorias     Int      @default(0)
   empates      Int      @default(0)
   derrotas     Int      @default(0)
+  white_games  Game[]   @relation(name: "white_player")
+  black_games  Game[]   @relation(name: "black_player")
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
-  
 }
 
 model Game {
-  id Int @id @default(autoincrement())
-  date_game DateTime @default(now())
-  ganhador String
-  jogador_brancas String
-  jogador_negras String
+  id              Int      @id @default(autoincrement())
+  date_game       DateTime @default(now())
+  ganhador        String
+  white_player    Player   @relation(name: "white_player", fields: [white_player_id], references: [id])
+  white_player_id Int
+  black_player    Player   @relation(name: "black_player", fields: [black_player_id], references: [id])
+  black_player_id Int
 }

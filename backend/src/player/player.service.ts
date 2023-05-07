@@ -11,7 +11,12 @@ export class PlayerService {
   playerPrisma = new PrismaClient().player;
 
   async getAllPlayers(): Promise<ResponseGetPlayerDto[]> {
-    return await this.playerPrisma.findMany();
+    return await this.playerPrisma.findMany({
+      include: {
+        black_games: true,
+        white_games: true,
+      },
+    });
   }
 
   async createPlayer(data: BodyPostPlayerDto): Promise<ResponseGetPlayerDto> {
@@ -24,7 +29,6 @@ export class PlayerService {
   }
 
   async getSinglePlayer(id: string): Promise<ResponseGetPlayerDto | null> {
-    console.log(id);
     return await this.playerPrisma.findFirst({
       where: { id: Number(id) },
     });
