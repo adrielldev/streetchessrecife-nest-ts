@@ -7,7 +7,12 @@ export class GamesService {
   playerPrisma = new PrismaClient().player;
 
   async getAllGames(): Promise<any> {
-    return await this.gamesPrisma.findMany();
+    return await this.gamesPrisma.findMany({
+      include: {
+        white_player: true,
+        black_player: true,
+      },
+    });
   }
 
   async createGame(data: any): Promise<any> {
@@ -23,9 +28,12 @@ export class GamesService {
       throw new NotFoundException('Jogador não encontrado');
     return await this.gamesPrisma.create({
       data: {
-        ganhador: data.ganhador,
+        winner: data.winner,
         white_player_id: white_player.id,
         black_player_id: black_player.id,
+        type_of_game: data.type_of_game,
+        rating_winner: 10,
+        rating_loser: 10,
       },
       include: {
         white_player: true,
@@ -51,12 +59,12 @@ export class GamesService {
   }
 
   async updateGame(id: string, data: any): Promise<any> {
-    // sup q a unica coisa q pode mudar no momento é o ganhador, uma lógica de reverter rating é feita antes,
+    // sup q a unica coisa q pode mudar no momento é o winner, uma lógica de reverter rating é feita antes,
     // quando eu adicionar o tipo de partida no banco vai poder alterar tbm isso
 
     return await this.gamesPrisma.update({
       where: { id: Number(id) },
-      data: { ganhador: data.ganhador },
+      data: { winner: data.winner },
       include: { black_player: true, white_player: true },
     });
   }

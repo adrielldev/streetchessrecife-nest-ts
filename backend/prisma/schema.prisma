@@ -13,19 +13,25 @@ model Player {
   username     String   @unique
   rating_blitz Int      @default(1500)
   rating_rapid Int      @default(1500)
-  vitorias     Int      @default(0)
-  empates      Int      @default(0)
-  derrotas     Int      @default(0)
+  victories    Int      @default(0)
+  draws        Int      @default(0)
+  loses        Int      @default(0)
   white_games  Game[]   @relation(name: "white_player")
   black_games  Game[]   @relation(name: "black_player")
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 }
 
+// rating winner -> quanto de rating o vencedor ganhou
+// rating loser -> quanto de rating o perdedor perdeu
+
 model Game {
   id              Int      @id @default(autoincrement())
   date_game       DateTime @default(now())
-  ganhador        String
+  winner          String
+  type_of_game    String
+  rating_winner   Int
+  rating_loser    Int
   white_player    Player   @relation(name: "white_player", fields: [white_player_id], references: [id])
   white_player_id Int
   black_player    Player   @relation(name: "black_player", fields: [black_player_id], references: [id])
