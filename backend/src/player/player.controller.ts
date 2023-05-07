@@ -9,40 +9,28 @@ import {
 } from '@nestjs/common/decorators';
 import { PlayerService } from './player.service';
 import { HttpStatus } from '@nestjs/common';
-import { ResponseGetPlayerDto } from './dto/responseGetPlayer.dto';
-import {
-  BodyPostPlayerDto,
-  BodyUpdatePlayerDto,
-} from './dto/bodyPostPlayer.dto';
 
 @Controller('player')
 export class PlayerController {
   constructor(private playerService: PlayerService) {}
 
   @Get()
-  async getAllPlayers(): Promise<ResponseGetPlayerDto[]> {
+  async getAllPlayers(): Promise<any[]> {
     return await this.playerService.getAllPlayers();
   }
 
   @Post()
-  async createPlayer(
-    @Body() data: BodyPostPlayerDto,
-  ): Promise<ResponseGetPlayerDto> {
+  async createPlayer(@Body() data: any): Promise<any> {
     return await this.playerService.createPlayer(data);
   }
 
   @Get(':id')
-  async getSinglePlayer(
-    @Param('id') id: string,
-  ): Promise<ResponseGetPlayerDto | null> {
+  async getSinglePlayer(@Param('id') id: string): Promise<any | null> {
     return await this.playerService.getSinglePlayer(id);
   }
 
   @Put(':id')
-  async updatePlayer(
-    @Param('id') id: string,
-    @Body() data: BodyUpdatePlayerDto,
-  ): Promise<ResponseGetPlayerDto> {
+  async updatePlayer(@Param('id') id: string, @Body() data: any): Promise<any> {
     return await this.playerService.updatePlayer(id, data);
   }
 
