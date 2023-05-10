@@ -9,23 +9,25 @@ import {
 } from '@nestjs/common/decorators';
 import { GamesService } from './games.service';
 import { HttpStatus } from '@nestjs/common';
+import { ResponseGetGameDto } from './dto/responseGetGame.dto';
+import { BodyPostGameDto, BodyUpdateGameDto } from './dto/bodyPostGame.dto';
 
 @Controller('games')
 export class GamesController {
   constructor(private gamesService: GamesService) {}
 
   @Get()
-  async getAllGames() {
+  async getAllGames():Promise<ResponseGetGameDto[]> {
     return await this.gamesService.getAllGames();
   }
 
   @Post()
-  async createGame(@Body() data: any): Promise<any> {
+  async createGame(@Body() data: BodyPostGameDto): Promise<ResponseGetGameDto> {
     return await this.gamesService.createGame(data);
   }
 
   @Get(':id')
-  async getSingleGame(@Param('id') id: string): Promise<any> {
+  async getSingleGame(@Param('id') id: string): Promise<ResponseGetGameDto | null > {
     return await this.gamesService.getSingleGame(id);
   }
 
@@ -36,7 +38,7 @@ export class GamesController {
   }
 
   @Put(':id')
-  async updateGame(@Param('id') id: string, @Body() data: any): Promise<any> {
+  async updateGame(@Param('id') id: string, @Body() data: BodyUpdateGameDto): Promise<ResponseGetGameDto | null> {
     return await this.gamesService.updateGame(id, data);
   }
 }
