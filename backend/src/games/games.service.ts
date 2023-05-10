@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Game, PrismaClient } from '@prisma/client';
 import { ResponseGetGameDto } from './dto/responseGetGame.dto';
 import { BodyPostGameDto, BodyUpdateGameDto } from './dto/bodyPostGame.dto';
 
@@ -60,7 +60,10 @@ export class GamesService {
     });
   }
 
-  async updateGame(id: string, data: BodyUpdateGameDto): Promise<ResponseGetGameDto | null> {
+  async updateGame(
+    id: string,
+    data: BodyUpdateGameDto,
+  ): Promise<ResponseGetGameDto | null> {
     // sup q a unica coisa q pode mudar no momento é o winner, uma lógica de reverter rating é feita antes,
     // quando eu adicionar o tipo de partida no banco vai poder alterar tbm isso
 
@@ -68,6 +71,27 @@ export class GamesService {
       where: { id: Number(id) },
       data: { winner: data.winner },
       include: { black_player: true, white_player: true },
+    });
+  }
+
+  async getAllGamesFromPlayer(
+    player_id: number,
+  ): Promise<ResponseGetGameDto[]> {
+    return await this.gamesPrisma.findMany({
+      where: {
+        OR: [
+          {
+            black_player_id: player_id,
+          },
+          {
+            white_player_id: player_id,
+          },
+        ],
+      },
+      include: {
+        white_player: true,
+        black_player: true,
+      },
     });
   }
 }

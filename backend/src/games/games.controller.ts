@@ -17,7 +17,7 @@ export class GamesController {
   constructor(private gamesService: GamesService) {}
 
   @Get()
-  async getAllGames():Promise<ResponseGetGameDto[]> {
+  async getAllGames(): Promise<ResponseGetGameDto[]> {
     return await this.gamesService.getAllGames();
   }
 
@@ -27,7 +27,9 @@ export class GamesController {
   }
 
   @Get(':id')
-  async getSingleGame(@Param('id') id: string): Promise<ResponseGetGameDto | null > {
+  async getSingleGame(
+    @Param('id') id: string,
+  ): Promise<ResponseGetGameDto | null> {
     return await this.gamesService.getSingleGame(id);
   }
 
@@ -38,7 +40,17 @@ export class GamesController {
   }
 
   @Put(':id')
-  async updateGame(@Param('id') id: string, @Body() data: BodyUpdateGameDto): Promise<ResponseGetGameDto | null> {
+  async updateGame(
+    @Param('id') id: string,
+    @Body() data: BodyUpdateGameDto,
+  ): Promise<ResponseGetGameDto | null> {
     return await this.gamesService.updateGame(id, data);
+  }
+
+  @Get('/player/:player_id')
+  async getAllGamesFromPlayer(
+    @Param('player_id') player_id: string,
+  ): Promise<ResponseGetGameDto[]> {
+    return await this.gamesService.getAllGamesFromPlayer(Number(player_id));
   }
 }
