@@ -94,4 +94,77 @@ export class GamesService {
       },
     });
   }
+
+  async getAllBlackGamesFromPlayer(
+    player_id: number,
+  ): Promise<ResponseGetGameDto[]> {
+    return await this.gamesPrisma.findMany({
+      where: {
+        black_player_id: player_id,
+      },
+      include: {
+        white_player: true,
+        black_player: true,
+      },
+    });
+  }
+
+  async getAllWhiteGamesFromPlayer(
+    player_id: number,
+  ): Promise<ResponseGetGameDto[]> {
+    return await this.gamesPrisma.findMany({
+      where: {
+        white_player_id: player_id,
+      },
+      include: {
+        white_player: true,
+        black_player: true,
+      },
+    });
+  }
+
+  async getVictories(player_id: number): Promise<any> {
+    const player = await this.playerPrisma.findFirst({
+      where: { id: player_id },
+    });
+    if (!player) throw new NotFoundException('player not found');
+
+    return await this.gamesPrisma.findMany({
+      where: {
+        winner: player.username,
+      },
+    });
+  }
+
+  async getDraws(player_id: number): Promise<any> {
+    const player = await this.playerPrisma.findFirst({
+      where: {
+        id: player_id,
+      },
+    });
+    if (!player) throw new NotFoundException('Player not found');
+  }
+
+  async getLoses(player_id: number): Promise<any> {
+    const player = await this.playerPrisma.findFirst({
+      where: {
+        id: player_id,
+      },
+    });
+    if (!player) throw new NotFoundException('Player not found');
+  }
+
+  async getGamesAgainstOther(
+    player_id: number,
+    other_player_id: number,
+  ): Promise<any> {
+    return await this.gamesPrisma.findMany({
+      where: {
+        AND: {
+          white_player_id: player_id,
+          black_player_id: other_player_id,
+        },
+      },
+    });
+  }
 }

@@ -47,10 +47,54 @@ export class GamesController {
     return await this.gamesService.updateGame(id, data);
   }
 
-  @Get('/player/:player_id')
+  @Get('player/:player_id')
   async getAllGamesFromPlayer(
     @Param('player_id') player_id: string,
   ): Promise<ResponseGetGameDto[]> {
     return await this.gamesService.getAllGamesFromPlayer(Number(player_id));
+  }
+
+  @Get('player/:player_id/black')
+  async getAllBlackGamesFromPlayer(
+    @Param('player_id') player_id: string,
+  ): Promise<ResponseGetGameDto[]> {
+    return await this.gamesService.getAllBlackGamesFromPlayer(
+      Number(player_id),
+    );
+  }
+
+  @Get('player/:player_id/white')
+  async getAllWhiteGamesFromPlayer(
+    @Param('player_id') player_id: string,
+  ): Promise<ResponseGetGameDto[]> {
+    return await this.gamesService.getAllWhiteGamesFromPlayer(
+      Number(player_id),
+    );
+  }
+
+  @Get('player/:player_id/victories')
+  async getVictories(@Param('player_id') player_id: string): Promise<any> {
+    return await this.gamesService.getVictories(Number(player_id));
+  }
+
+  @Get('player/:player_id/draws')
+  async getDraws(@Param('player_id') player_id: string): Promise<any> {
+    return await this.gamesService.getDraws(Number(player_id));
+  }
+
+  @Get('player/:player_id/loses')
+  async getLoses(@Param('player_id') player_id: string): Promise<any> {
+    return await this.gamesService.getLoses(Number(player_id));
+  }
+
+  @Get('/player/:player_id/:other_player_id')
+  async getGamesAgainstOther(
+    @Param('player_id') player_id: string,
+    @Param('other_player_id') other_player_id: string,
+  ): Promise<any> {
+    return await this.gamesService.getGamesAgainstOther(
+      Number(player_id),
+      Number(other_player_id),
+    );
   }
 }
