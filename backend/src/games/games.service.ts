@@ -30,12 +30,12 @@ export class GamesService {
       throw new NotFoundException('Jogador não encontrado');
     return await this.gamesPrisma.create({
       data: {
-        winner: data.winner,
+        result: data.result,
         white_player_id: white_player.id,
         black_player_id: black_player.id,
         type_of_game: data.type_of_game,
-        rating_winner: 10,
-        rating_loser: 10,
+        rating_black_player: 10,
+        rating_white_player: 10,
       },
       include: {
         white_player: true,
@@ -64,12 +64,10 @@ export class GamesService {
     id: string,
     data: BodyUpdateGameDto,
   ): Promise<ResponseGetGameDto | null> {
-    // sup q a unica coisa q pode mudar no momento é o winner, uma lógica de reverter rating é feita antes,
-    // quando eu adicionar o tipo de partida no banco vai poder alterar tbm isso
 
     return await this.gamesPrisma.update({
       where: { id: Number(id) },
-      data: { winner: data.winner },
+      data: { result: data.result },
       include: { black_player: true, white_player: true },
     });
   }
@@ -129,11 +127,7 @@ export class GamesService {
     });
     if (!player) throw new NotFoundException('player not found');
 
-    return await this.gamesPrisma.findMany({
-      where: {
-        winner: player.username,
-      },
-    });
+    
   }
 
   async getDraws(player_id: number): Promise<any> {

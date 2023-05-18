@@ -3,10 +3,10 @@ import { Player } from "@prisma/client";
 export interface ResponseGetGameDto {
     id:number;
     date_game:Date;
-    winner:string;
+    result:string;
     type_of_game:string;
-    rating_winner:number;
-    rating_loser:number;
+    rating_white_player:number;
+    rating_black_player:number;
     white_player_id:number;
     black_player_id:number;
     black_player: Player;

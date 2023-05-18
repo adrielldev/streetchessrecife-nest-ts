@@ -1,5 +1,5 @@
 export interface BodyPostGameDto{
-    winner:string;
+    result:string;
     white_player:string;
     black_player:string;
     type_of_game:string;
@@ -7,5 +7,5 @@ export interface BodyPostGameDto{
 }
 
 export interface BodyUpdateGameDto {
-    winner:string;
+    result:string;
 }
