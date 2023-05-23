@@ -4,7 +4,6 @@ export interface ResponseGetGameDto {
     id:number;
     date_game:Date;
     result:string;
-    type_of_game:string;
     rating_white_player:number;
     rating_black_player:number;
     white_player_id:number;

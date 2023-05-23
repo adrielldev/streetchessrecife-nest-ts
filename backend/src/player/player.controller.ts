@@ -16,15 +16,11 @@ import { ResponseGetPlayerDto } from './dto/responseGetPlayer.dto';
 export class PlayerController {
   constructor(private playerService: PlayerService) {}
 
-  @Get('/rapid-ranking')
+  @Get('ranking')
   async getRapidRanking(): Promise<ResponseGetPlayerDto[]> {
     return await this.playerService.getRapidRanking();
   }
 
-  @Get('/blitz-ranking')
-  async getBlitzRanking(): Promise<ResponseGetPlayerDto[]> {
-    return await this.playerService.getBlitzRanking();
-  }
 
   @Get()
   async getAllPlayers(): Promise<ResponseGetPlayerDto[]> {

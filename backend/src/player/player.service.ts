@@ -37,7 +37,7 @@ export class PlayerService {
   async updatePlayer(id: string, data: BodyUpdatePlayerDto) {
     return await this.playerPrisma.update({
       where: { id: Number(id) },
-      data: { rating_blitz: data.rating_blitz },
+      data: { rating_rapid: data.rating_rapid },
     });
   }
   async deletePlayer(id: string): Promise<void> {
@@ -46,13 +46,7 @@ export class PlayerService {
     });
   }
 
-  async getBlitzRanking(): Promise<ResponseGetPlayerDto[]> {
-    return await this.playerPrisma.findMany({
-      orderBy: {
-        rating_blitz: 'desc',
-      },
-    });
-  }
+
 
   async getRapidRanking(): Promise<ResponseGetPlayerDto[]> {
     return await this.playerPrisma.findMany({

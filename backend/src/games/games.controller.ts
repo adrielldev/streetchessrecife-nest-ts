@@ -73,17 +73,17 @@ export class GamesController {
   }
 
   @Get('player/:player_id/victories')
-  async getVictories(@Param('player_id') player_id: string): Promise<any> {
+  async getVictories(@Param('player_id') player_id: string): Promise<ResponseGetGameDto[]> {
     return await this.gamesService.getVictories(Number(player_id));
   }
 
   @Get('player/:player_id/draws')
-  async getDraws(@Param('player_id') player_id: string): Promise<any> {
+  async getDraws(@Param('player_id') player_id: string): Promise<ResponseGetGameDto[]> {
     return await this.gamesService.getDraws(Number(player_id));
   }
 
   @Get('player/:player_id/loses')
-  async getLoses(@Param('player_id') player_id: string): Promise<any> {
+  async getLoses(@Param('player_id') player_id: string): Promise<ResponseGetGameDto[]> {
     return await this.gamesService.getLoses(Number(player_id));
   }
 
@@ -91,7 +91,7 @@ export class GamesController {
   async getGamesAgainstOther(
     @Param('player_id') player_id: string,
     @Param('other_player_id') other_player_id: string,
-  ): Promise<any> {
+  ): Promise<ResponseGetGameDto[]> {
     return await this.gamesService.getGamesAgainstOther(
       Number(player_id),
       Number(other_player_id),
