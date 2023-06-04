@@ -9,7 +9,6 @@ import {
   BadRequestException,
   HttpException,
   NotFoundException,
-  UnprocessableEntityException,
 } from '@nestjs/common';
 
 @Injectable()
@@ -25,7 +24,10 @@ export class PlayerService {
         },
       });
     } catch (error) {
-      throw new HttpException('Erro ao selecionar todos usuários', 400);
+      throw new HttpException(
+        error.message || 'Erro ao selecionar todos usuários',
+        error.status || 400,
+      );
     }
   }
 
@@ -81,7 +83,7 @@ export class PlayerService {
       });
     } catch (error) {
       throw new HttpException(
-        error.message || 'Erro ao selecionar usuário',
+        error.message || 'Erro ao atualizar usuário',
         error.status || 400,
       );
     }
@@ -98,7 +100,7 @@ export class PlayerService {
       });
     } catch (error) {
       throw new HttpException(
-        error.message || 'Erro ao selecionar usuário',
+        error.message || 'Erro ao deletar usuário',
         error.status || 400,
       );
     }
@@ -113,7 +115,7 @@ export class PlayerService {
       });
     } catch (error) {
       throw new HttpException(
-        error.message || 'Erro ao selecionar usuário',
+        error.message || 'Erro ao pegar lista de usuários',
         error.status || 400,
       );
     }

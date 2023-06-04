@@ -2,7 +2,7 @@ import {
   BodyPostPlayerDto,
   BodyUpdatePlayerDto,
 } from 'src/player/dto/bodyPostPlayer.dto';
-import { object, string, number, date, InferType } from 'yup';
+import { object, string, number,} from 'yup';
 
 export const CreatePlayerSchema = object<BodyPostPlayerDto>({
   name: string().required('Nome é obrigatório'),
