@@ -8,9 +8,11 @@ import {
   Put,
 } from '@nestjs/common/decorators';
 import { PlayerService } from './player.service';
-import { HttpStatus } from '@nestjs/common';
+import { HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BodyPostPlayerDto } from './dto/bodyPostPlayer.dto';
 import { ResponseGetPlayerDto } from './dto/responseGetPlayer.dto';
+import { CreatePlayerSchema, UpdatePlayerSchema } from 'src/schemas/PlayerSchema';
+import { YupValidationPipe } from 'src/pipes/YupValidationPipe';
 
 @Controller('player')
 export class PlayerController {
@@ -27,6 +29,7 @@ export class PlayerController {
     return await this.playerService.getAllPlayers();
   }
 
+  @UsePipes(new YupValidationPipe(CreatePlayerSchema))
   @Post()
   async createPlayer(
     @Body() data: BodyPostPlayerDto,
@@ -41,6 +44,7 @@ export class PlayerController {
     return await this.playerService.getSinglePlayer(id);
   }
 
+  @UsePipes(new YupValidationPipe(UpdatePlayerSchema))
   @Put(':id')
   async updatePlayer(
     @Param('id') id: string,
