@@ -30,8 +30,8 @@ model Game {
   result          String
   rating_white_player   Int
   rating_black_player    Int
-  white_player    Player   @relation(name: "white_player", fields: [white_player_id], references: [id])
+  white_player    Player   @relation(name: "white_player", fields: [white_player_id], references: [id],onDelete: Cascade)
   white_player_id Int
-  black_player    Player   @relation(name: "black_player", fields: [black_player_id], references: [id])
+  black_player    Player   @relation(name: "black_player", fields: [black_player_id], references: [id], onDelete: Cascade)
   black_player_id Int
 }

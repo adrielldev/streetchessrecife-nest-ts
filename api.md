@@ -5,7 +5,6 @@
 > get single player
 > update player
 > delete player
-> get blitz ranking
 > get rapid ranking
 
 # Games route /games

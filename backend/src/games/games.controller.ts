@@ -8,9 +8,11 @@ import {
   Put,
 } from '@nestjs/common/decorators';
 import { GamesService } from './games.service';
-import { HttpStatus } from '@nestjs/common';
+import { HttpStatus, UsePipes } from '@nestjs/common';
 import { ResponseGetGameDto } from './dto/responseGetGame.dto';
 import { BodyPostGameDto, BodyUpdateGameDto } from './dto/bodyPostGame.dto';
+import { YupValidationPipe } from 'src/pipes/YupValidationPipe';
+import { CreateGameSchema, UpdateGameSchema } from 'src/schemas/GamesSchema';
 
 @Controller('games')
 export class GamesController {
@@ -21,6 +23,7 @@ export class GamesController {
     return await this.gamesService.getAllGames();
   }
 
+  @UsePipes(new YupValidationPipe(CreateGameSchema))
   @Post()
   async createGame(@Body() data: BodyPostGameDto): Promise<ResponseGetGameDto> {
     return await this.gamesService.createGame(data);
@@ -39,6 +42,7 @@ export class GamesController {
     return HttpStatus.NO_CONTENT;
   }
 
+  @UsePipes(new YupValidationPipe(UpdateGameSchema))
   @Put(':id')
   async updateGame(
     @Param('id') id: string,
