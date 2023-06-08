@@ -8,11 +8,11 @@ import {
   Put,
 } from '@nestjs/common/decorators';
 import { PlayerService } from './player.service';
-import { HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
+import { HttpStatus, UsePipes} from '@nestjs/common';
 import { BodyPostPlayerDto } from './dto/bodyPostPlayer.dto';
 import { ResponseGetPlayerDto } from './dto/responseGetPlayer.dto';
-import { CreatePlayerSchema, UpdatePlayerSchema } from 'src/schemas/PlayerSchema';
-import { YupValidationPipe } from 'src/pipes/YupValidationPipe';
+import { CreatePlayerSchema, UpdatePlayerSchema } from '../schemas/PlayerSchema';
+import { YupValidationPipe } from '../pipes/YupValidationPipe';
 
 @Controller('player')
 export class PlayerController {
