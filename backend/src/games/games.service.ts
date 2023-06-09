@@ -7,7 +7,7 @@ import {
 import { PrismaClient } from '@prisma/client';
 import { ResponseGetGameDto } from './dto/responseGetGame.dto';
 import { BodyPostGameDto, BodyUpdateGameDto } from './dto/bodyPostGame.dto';
-import { EloRating } from 'src/utils/functions';
+import { EloRating } from '../utils/functions';
 
 @Injectable()
 export class GamesService {

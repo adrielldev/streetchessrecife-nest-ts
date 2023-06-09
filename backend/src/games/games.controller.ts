@@ -11,8 +11,8 @@ import { GamesService } from './games.service';
 import { HttpStatus, UsePipes } from '@nestjs/common';
 import { ResponseGetGameDto } from './dto/responseGetGame.dto';
 import { BodyPostGameDto, BodyUpdateGameDto } from './dto/bodyPostGame.dto';
-import { YupValidationPipe } from 'src/pipes/YupValidationPipe';
-import { CreateGameSchema, UpdateGameSchema } from 'src/schemas/GamesSchema';
+import { YupValidationPipe } from '../pipes/YupValidationPipe'
+import { CreateGameSchema, UpdateGameSchema } from '../schemas/GamesSchema'
 
 @Controller('games')
 export class GamesController {

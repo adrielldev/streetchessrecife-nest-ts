@@ -4,7 +4,13 @@ import { PlayerModule } from '../../player/player.module';
 import { PlayerService } from '../../player/player.service';
 import { INestApplication } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { CreatePlayerMock } from '../mocks/PlayerMock';
+import {
+  CreateOtherPlayerMock,
+  CreatePlayerMock,
+  CreatePlayerUnexistingFieldsMock,
+  SameUsernamePlayerMock,
+  updatePlayerMock,
+} from '../mocks/PlayerMock';
 
 describe('Testing /player', () => {
   let app: INestApplication;
@@ -56,12 +62,116 @@ describe('Testing /player', () => {
     expect(response.body.message).toBe('Usuário inexistente');
   });
 
-  it('Should create a player - POST /player',async () => {
+  it('Should create a player - POST /player', async () => {
     const createNewPlayer = await request(app.getHttpServer())
       .post('/player')
       .send(CreatePlayerMock);
-    
-  })
+
+    expect(createNewPlayer.statusCode).toBe(201);
+    expect(createNewPlayer.body.username).toBe(CreatePlayerMock.username);
+    expect(createNewPlayer.body.name).toBe(CreatePlayerMock.name);
+    await request(app.getHttpServer()).delete(
+      `/player/${createNewPlayer.body.id}`,
+    );
+  });
+
+  it('Shouldnt create a player with same username - POST /player', async () => {
+    const createNewPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreatePlayerMock);
+
+    const samePlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(SameUsernamePlayerMock);
+
+    expect(samePlayer.statusCode).toBe(400);
+
+    await request(app.getHttpServer()).delete(`/player/${samePlayer.body.id}`);
+    await request(app.getHttpServer()).delete(
+      `/player/${createNewPlayer.body.id}`,
+    );
+  });
+
+  it('Shouldnt create a player without required fields - POST /player', async () => {
+    const wrongPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreatePlayerUnexistingFieldsMock);
+    expect(wrongPlayer.statusCode).toBe(422);
+  });
+
+  it('Should update a player - PUT /player', async () => {
+    const createNewPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreatePlayerMock);
+
+    const updatedPlayer = await request(app.getHttpServer())
+      .put(`/player/${createNewPlayer.body.id}`)
+      .send(updatePlayerMock);
+
+    expect(updatedPlayer.statusCode).toBe(200);
+    expect(updatedPlayer.body.rating_rapid).toBe(10);
+
+    await request(app.getHttpServer()).delete(
+      `/player/${createNewPlayer.body.id}`,
+    );
+  });
+
+  it('Shouldnt update a player that dont exist  - PUT /player', async () => {
+    const createNewPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreatePlayerMock);
+
+    await request(app.getHttpServer()).delete(
+      `/player/${createNewPlayer.body.id}`,
+    );
+    const updatedPlayer = await request(app.getHttpServer())
+      .put(`/player/${createNewPlayer.body.id}`)
+      .send(updatePlayerMock);
+
+    expect(updatedPlayer.statusCode).toBe(404);
+    expect(updatedPlayer.body.message).toBe('Usuário inexistente');
+  });
+
+  it('Should delete a player  - DELETE /player', async () => {
+    const createNewPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreatePlayerMock);
+
+    const deletedPlayer = await request(app.getHttpServer()).delete(
+      `/player/${createNewPlayer.body.id}`,
+    );
+    expect(deletedPlayer.statusCode).toBe(200);
+  });
+
+  it('Shouldnt delete a player that doesnt exist  - PUT /player', async () => {
+    const createNewPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreatePlayerMock);
+
+    await request(app.getHttpServer()).delete(
+      `/player/${createNewPlayer.body.id}`,
+    );
+
+    const deletedPlayer = await request(app.getHttpServer()).delete(
+      `/player/${createNewPlayer.body.id}`,
+    );
+
+    expect(deletedPlayer.statusCode).toBe(404);
+    expect(deletedPlayer.body.message).toBe('Usuário inexistente');
+  });
+
+  it('Should get the rapid ranking of the players  - GET /player/ranking', async () => {
+    const createNewPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreatePlayerMock);
+
+    const createOtherPlayer = await request(app.getHttpServer())
+      .post('/player')
+      .send(CreateOtherPlayerMock);
+  });
+
+  // jogar partida
+  // pegar o ranking e checar o status e se o jogador 1 está na pos 0
 
   afterAll(async () => {
     await app.close();
