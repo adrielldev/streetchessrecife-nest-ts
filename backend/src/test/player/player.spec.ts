@@ -11,6 +11,7 @@ import {
   SameUsernamePlayerMock,
   updatePlayerMock,
 } from '../mocks/PlayerMock';
+import { CreateGameMock } from '../mocks/GamesMock';
 
 describe('Testing /player', () => {
   let app: INestApplication;
@@ -161,17 +162,25 @@ describe('Testing /player', () => {
   });
 
   it('Should get the rapid ranking of the players  - GET /player/ranking', async () => {
-    const createNewPlayer = await request(app.getHttpServer())
+    const server = app.getHttpServer();
+    const createNewPlayer = await request(server)
       .post('/player')
       .send(CreatePlayerMock);
 
-    const createOtherPlayer = await request(app.getHttpServer())
+    const createOtherPlayer = await request(server)
       .post('/player')
       .send(CreateOtherPlayerMock);
-  });
 
-  // jogar partida
-  // pegar o ranking e checar o status e se o jogador 1 está na pos 0
+    await request(server).post('/games').send(CreateGameMock);
+
+    const ranking = await request(server).get('/player/ranking');
+
+    expect(ranking.statusCode).toBe(200);
+    expect(ranking.body[0].username).toBe('usernameteste');
+
+    await request(server).delete(`/player/${createNewPlayer.body.id}`);
+    await request(server).delete(`/player/${createOtherPlayer.body.id}`);
+  }, 50000);
 
   afterAll(async () => {
     await app.close();
