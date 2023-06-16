@@ -21,5 +21,5 @@ export const PlayerDoesntExistGameMock= {
 }
 
 export const UpdateGameMock = {
-    result:'b';
+    result:'b'
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1686825102382" clover="3.2.0">
+  <project timestamp="1686825102382" name="All files">
+    <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="10" coveredelements="10" complexity="0" loc="10" ncloc="10" packages="1" files="2" classes="2"/>
+    <file name="GamesMock.ts" path="C:\Users\adrie\OneDrive\Área de Trabalho\Code\Projects\streetchessrecife-nest-ts\backend\src\test\mocks\GamesMock.ts">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="7" count="2" type="stmt"/>
+      <line num="11" count="2" type="stmt"/>
+      <line num="17" count="2" type="stmt"/>
+      <line num="23" count="2" type="stmt"/>
+    </file>
+    <file name="PlayerMock.ts" path="C:\Users\adrie\OneDrive\Área de Trabalho\Code\Projects\streetchessrecife-nest-ts\backend\src\test\mocks\PlayerMock.ts">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="6" count="2" type="stmt"/>
+      <line num="11" count="2" type="stmt"/>
+      <line num="16" count="2" type="stmt"/>
+      <line num="20" count="2" type="stmt"/>
+    </file>
+  </project>
+</coverage>

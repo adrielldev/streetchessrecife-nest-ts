@@ -16,7 +16,6 @@ import { CreateGameMock } from '../mocks/GamesMock';
 describe('Testing /player', () => {
   let app: INestApplication;
   let playerService: PlayerService;
-  const playerPrisma = new PrismaClient().player;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
