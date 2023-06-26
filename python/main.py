@@ -1,10 +1,19 @@
-import requests
+
+from reqs import getRapidRanking
+from plots import create_file
+
+def main():
+    ranking_players = getRapidRanking()
+    create_file(ranking_players)
 
 
-requisicao = requests.get('http://localhost:3333/player')
+if __name__ == '__main__':
+    main()
 
-print(requisicao)
-print(requisicao.json())
+
+
+
+
 
 
 
