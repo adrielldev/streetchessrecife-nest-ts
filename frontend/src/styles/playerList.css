@@ -1,0 +1,29 @@
+.div-player-list{
+
+}
+
+.div-player-list-header{
+
+}
+
+.div-player-list-players{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.div-player-list-players-player {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    border: 1px solid red;
+
+}
+
+.div-player-list-players-player h1  {
+    width: 8em;
+    height: 3em;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 1.6em;
+}
