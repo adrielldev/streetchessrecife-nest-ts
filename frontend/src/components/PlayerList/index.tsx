@@ -1,6 +1,7 @@
 import React,{useState,useEffect, ReactNode} from 'react'
 import { api } from '@/service/api';
-import '../../styles/playerList.css'
+import '../../app/globals.css'
+import Layout from '../Layout';
 
 function PlayerList() {
     const [players,setPlayers] = useState([] as any);
@@ -13,32 +14,43 @@ function PlayerList() {
     loadPlayers();
   },[])
   return (
-    <div className='div-player-list'>
-        <div className='div-player-list-header'>
-            <h1>Player Ranking</h1>
-        </div>
-        <div className='div-player-list-players'>
-        <div className='div-player-list-players-player' key={0}>
-                <h1>Nome</h1>
-                <h1>Username</h1>
-                <h1>Rating </h1>
-                <h1>Vitórias</h1>
-                <h1>Empates</h1>
-                <h1>Derrotas</h1>
-            </div>
-        {players ? players.map(player => (
-            <div className='div-player-list-players-player' key={player.id}>
-                <h1>{player.name}</h1>
-                <h1>{player.username}</h1>
-                <h1>{player.rating_rapid}</h1>
-                <h1>{player.victories}</h1>
-                <h1>{player.draws}</h1>
-                <h1>{player.loses}</h1>
-            </div>
-        )) : <h1>Loading...</h1>}
+    <>
+     <Layout/>
+     <ul>
+      <li className='flex gap-6'>
+        <h1>
+          Nome
+        </h1>
+        <h1>
+          Username
+        </h1>
+        <h1>
+          Rating
+        </h1>
+        <h1>
+          Vitórias
+        </h1>
+        <h1>
+          Empates
+        </h1>
+        <h1>
+          Derrotas
+        </h1>
 
-        </div>
-    </div>
+      </li>
+      {players?.map((player:any) => (
+        <li key={player.id} className='flex gap-6'>
+          <h1>{player.name}</h1>
+          <h1>{player.username}</h1>
+          <h1>{player.rating_rapid}</h1>
+          <h1>{player.victories}</h1>
+          <h1>{player.draws}</h1>
+          <h1>{player.loses}</h1>
+        </li>
+      ))}
+     </ul>
+    </>
+   
   )
 }
 
