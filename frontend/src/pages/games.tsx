@@ -30,6 +30,7 @@ function Games() {
 
   const createGame = async () => {
     try {
+      console.log(result);
       await api.post('/games',{
         white_player:whitePlayer,
         black_player:blackPlayer,
@@ -46,9 +47,17 @@ function Games() {
   }
   
   const handleResult = (result:string) => {
-    if(result === 'Brancas') setResult('w');
-    else if(result === 'Negras') setResult('b');
-    setResult('d');
+    // usar switch
+    console.log()
+    if(result === 'Brancas'){
+      setResult('w')
+    } else if(result === 'Negras') {
+      setResult('b');
+    } else {
+      setResult('d');
+    }
+    
+    
   }
 
 
