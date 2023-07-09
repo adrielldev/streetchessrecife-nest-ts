@@ -4,9 +4,9 @@ export interface BodyPostPlayerDto {
 }
 
 export interface BodyUpdatePlayerDto extends BodyPostPlayerDto{
-  vitorias?:string;
-  derrotas?:string;
-  empates?:string;
+  victories?:string;
+  loses?:string;
+  draws?:string;
 	rating_rapid?: number,
 
   
