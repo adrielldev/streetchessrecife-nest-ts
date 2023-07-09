@@ -76,10 +76,11 @@ export class PlayerService {
       const userExists = await this.playerPrisma.count({
         where: { id: Number(id) },
       });
+
       if (!userExists) throw new NotFoundException('Usuário inexistente');
       return await this.playerPrisma.update({
         where: { id: Number(id) },
-        data: { rating_rapid: data.rating_rapid },
+        data: { rating_rapid: data.rating_rapid, loses: Number(data?.loses) },
       });
     } catch (error) {
       throw new HttpException(
@@ -94,7 +95,7 @@ export class PlayerService {
         where: { id: Number(id) },
       });
       if (!userExists) throw new NotFoundException('Usuário inexistente');
-      
+
       await this.playerPrisma.delete({
         where: { id: Number(id) },
       });
